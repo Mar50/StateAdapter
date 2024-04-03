@@ -4,7 +4,7 @@
 
 int main (int argc, char** argv) 
 {
-    State* currentState = new 
+    State currentState = new 
     if(currentState->m_iCount > 0)
     {
         currentState->SetState(currentState, noQuarterState);

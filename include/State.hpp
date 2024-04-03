@@ -25,7 +25,7 @@ class State {
     // const static int m_pSoldState = 3;
 };
 
-class GumBallMachine : public State
+class GumBallMachine
 {
     State soldOutState;
     State noQuarterState;
@@ -50,12 +50,24 @@ class SoldOutState : public State
 
 class NoQuarterState : public State
 {
-
+    GumBallMachine m_oGumBall;
+    NoQuarterState(GumBallMachine a_oGumBallMachine)
+    {
+        this->m_oGumBall = a_oGumBallMachine;
+    }
+    int InsertQuarter()
+    {
+        std::cout << "You inserted a quarter" << std::endl;
+    }
 };
 
 class HasQuarterState : public State
 {
-
+    
+    int EjectQuarter()
+    {
+        std::cout << "Quarter returned" << std::endl;
+    }
 };
 
 class WinnerState : public State

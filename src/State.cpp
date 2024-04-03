@@ -65,33 +65,33 @@ int State::GetCount()
     return 0;
 }
 
-int State::LoadGumballs(int a_iLoadAmount)
-{
-    this->m_iCount = a_iLoadAmount;
-    return 0;
-}
+// int State::LoadGumballs(int a_iLoadAmount)
+// {
+//     this->m_iCount = a_iLoadAmount;
+//     return 0;
+// }
 
-int State::InsertQuarter()
-{
-    if(this->m_pHasQuarterState)
-        std::cout << "You can't insert another quarter!" << std::endl;
-    else if(m_pCurrentState->m_pNoQuarterState)
-    {
-        m_pCurrentState = m_pHasQuarterState;
-        std::cout << "You inserted a quarter" << std::endl;
-    }
-    else if(m_pCurrentState->m_pSoldOutState)
-    {
-        std::cout << "You can't insert a quarter, the machine is sold out" << std::endl;
-    }
-    else if(m_pCurrentState->m_pSoldState)
-    {
-        std::cout << "Please wait, we're already giving you a gumball" << std::endl;
-    }
-    return 0;
-}
+// int State::InsertQuarter()
+// {
+//     if(this->m_pHasQuarterState)
+//         std::cout << "You can't insert another quarter!" << std::endl;
+//     else if(m_pCurrentState->m_pNoQuarterState)
+//     {
+//         m_pCurrentState = m_pHasQuarterState;
+//         std::cout << "You inserted a quarter" << std::endl;
+//     }
+//     else if(m_pCurrentState->m_pSoldOutState)
+//     {
+//         std::cout << "You can't insert a quarter, the machine is sold out" << std::endl;
+//     }
+//     else if(m_pCurrentState->m_pSoldState)
+//     {
+//         std::cout << "Please wait, we're already giving you a gumball" << std::endl;
+//     }
+//     return 0;
+// }
 
-int State::EjectQuarter(State* a_pCurrentState)
+int State::EjectQuarter()
 {
     if(m_pCurrentState->m_pHasQuarterState)
     {
@@ -111,6 +111,11 @@ int State::EjectQuarter(State* a_pCurrentState)
         std::cout << "You can't eject, you haven't inserted a quarter yet" << std::endl;
     }
     return 0;
+}
+
+void EjectQuarter()
+{
+    std::cout << "You haven't inserted a quarter" << std::endl;
 }
 
 int State::TurnCrank(State* a_pCurrentState)
