@@ -6,9 +6,9 @@
 
 class State {
     public:
-    State();
+    State(int a_num);
     int GetState();
-    //int SetState(int a_State);
+    int GetCount();
     int LoadGumballs(int a_num);
     ~State();
 

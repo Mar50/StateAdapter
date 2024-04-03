@@ -5,14 +5,19 @@
 // #define HAS_QUARTER = m_iHAS_QUARTER;
 // #define SOLD = m_iSOLD;
 
-State::State()
+State::State(int a_num)
 {
-    //LoadGumballs(a_num);
+    LoadGumballs(a_num);
 }
 
 int State::GetState()
 {
     return m_iState;
+}
+
+int State::GetCount()
+{
+    return m_iCount;
 }
 
 // int State::SetState(int a_State)

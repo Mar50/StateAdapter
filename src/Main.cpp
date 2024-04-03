@@ -5,8 +5,8 @@
 
 int main (int argc, char** argv) 
 {
-    State* pState = new State();
-    //pState->SetState(1); //Set current state to 1
+    State* pState = new State(5);
     std::cout << "State of machine is: " << pState->GetState() << std::endl;
+    std::cout << "Amount of gumballs in machine is: " << pState->GetCount() << std::endl;
     return 0;
 }

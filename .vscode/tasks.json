@@ -6,11 +6,11 @@
             "command": "/usr/bin/g++",
             "args": [
                 "-fdiagnostics-color=always",
-                //"-g",
+                "-g",
                 //"${file}",
                 "${workspaceFolder}/src/*.cpp",
                 "-o",
-                "${workspaceFolder}/build/${fileBasenameNoExtension}.out",
+                "${workspaceFolder}/build/test.out",
                 "-I",
                 "${workspaceFolder}/include",
                 ""
