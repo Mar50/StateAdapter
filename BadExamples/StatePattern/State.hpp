@@ -18,12 +18,12 @@ class State {
     ~State();
 
     private:
-    int m_iState = m_iSOLD_OUT;
+    int m_pCurrentState = m_pSoldOutState;
     int m_iCount = 0;
     
-    const static int m_iSOLD_OUT = 0;
-    const static int m_iNO_QUARTER = 1;
+    const static int m_pSoldOutState = 0;
+    const static int m_pNoQuarterState = 1;
     const static int m_iHAS_QUARTER = 2;
-    const static int m_iSOLD = 3;
+    const static int m_pSoldState = 3;
 };
 #endif

@@ -55,24 +55,24 @@ int State::GetCount()
 int State::LoadGumballs(int a_iLoadAmount)
 {
     m_iCount = a_iLoadAmount;
-    m_iState = m_iNO_QUARTER;
+    m_pCurrentState = m_pNoQuarterState;
     return 0;
 }
 
 int State::InsertQuarter()
 {
-    if(m_iState==m_iHAS_QUARTER)
+    if(m_pCurrentState->m_pHasQuarterState)
         std::cout << "You can't insert another quarter!" << std::endl;
-    else if(m_iState==m_iNO_QUARTER)
+    else if(m_pCurrentState==m_pNoQuarterState)
     {
-        m_iState = m_iHAS_QUARTER;
+        m_pCurrentState = m_iHAS_QUARTER;
         std::cout << "You inserted a quarter" << std::endl;
     }
-    else if(m_iState==m_iSOLD_OUT)
+    else if(m_pCurrentState==m_pSoldOutState)
     {
         std::cout << "You can't insert a quarter, the machine is sold out" << std::endl;
     }
-    else if(m_iState==m_iSOLD)
+    else if(m_pCurrentState==m_pSoldState)
     {
         std::cout << "Please wait, we're already giving you a gumball" << std::endl;
     }
@@ -81,20 +81,20 @@ int State::InsertQuarter()
 
 int State::EjectQuarter()
 {
-    if(m_iState==m_iHAS_QUARTER)
+    if(m_pCurrentState->m_pHasQuarterState)
     {
-        m_iState = m_iNO_QUARTER;
+        m_pCurrentState = m_pNoQuarterState;
         std::cout << "Quarter returned" << std::endl;
     }
-    else if(m_iState==m_iNO_QUARTER)
+    else if(m_pCurrentState==m_pNoQuarterState)
     {
         std::cout << "You haven't inserted a quarter" << std::endl;
     }
-    else if(m_iState==m_iSOLD)
+    else if(m_pCurrentState==m_pSoldState)
     {
         std::cout << "Sorry, you already turned the crank" << std::endl;
     }
-    else if(m_iState==m_iSOLD_OUT)
+    else if(m_pCurrentState==m_pSoldOutState)
     {
         std::cout << "You can't eject, you haven't inserted a quarter yet" << std::endl;
     }
@@ -103,19 +103,19 @@ int State::EjectQuarter()
 
 int State::TurnCrank()
 {
-    if(m_iState==m_iSOLD)
+    if(m_pCurrentState==m_pSoldState)
         std::cout << "Turning twice doesn't get you another gumball!" << std::endl;
-    else if(m_iState==m_iNO_QUARTER)
+    else if(m_pCurrentState==m_pNoQuarterState)
     {
         std::cout << "You turned but there's no quarter" << std::endl;
     }
-    else if(m_iState==m_iSOLD_OUT)
+    else if(m_pCurrentState==m_pSoldOutState)
     {
         std::cout << "You turned but there's no gumballs" << std::endl;
     }
-    else if(m_iState==m_iHAS_QUARTER)
+    else if(m_pCurrentState->m_pHasQuarterState)
     {
-        m_iState = m_iSOLD;
+        m_pCurrentState = m_pSoldState;
         std::cout << "You turned..." << std::endl;
         Dispense();
     }
@@ -124,27 +124,27 @@ int State::TurnCrank()
 
 int State::Dispense()
 {
-    if(m_iState==m_iSOLD)
+    if(m_pCurrentState==m_pSoldState)
     {
         std::cout << "A gumball comes rolling out of the slot" << std::endl;
         m_iCount--;
             if(m_iCount==0)
             {
                 std::cout << "Oops, out of gumballs!" << std::endl;
-                m_iState = m_iSOLD_OUT;
+                m_pCurrentState = m_pSoldOutState;
             }
             else
-                m_iState = m_iNO_QUARTER;
+                m_pCurrentState = m_pNoQuarterState;
     }
-    else if(m_iState==m_iNO_QUARTER)
+    else if(m_pCurrentState==m_pNoQuarterState)
     {
         std::cout << "You need to pay first" << std::endl;
     }
-    else if(m_iState==m_iSOLD_OUT)
+    else if(m_pCurrentState==m_pSoldOutState)
     {
         std::cout << "No gumball dispensed" << std::endl;
     }
-    else if(m_iState==m_iHAS_QUARTER)
+    else if(m_pCurrentState->m_pHasQuarterState)
     {
         std::cout << "No gumball dispensed" << std::endl;
     }
