@@ -6,56 +6,50 @@
 
 class State {
     public:
-    State(int a_numGumballs);
-    int GetState(State* a_pCurrentState);
-    int SetState(State* a_pCurrentState, State* a_pNewState);
-    int InsertQuarter();
-    int EjectQuarter();
-    int TurnCrank();
+    //State(int a_numGumballs);
+    //int GetState(State* a_pCurrentState);
+    //int SetState(State* a_pCurrentState, State* a_pNewState);
+    virtual void InsertQuarter();
+    virtual void EjectQuarter();
+    virtual void TurnCrank();
     //int LoadGumballs(int a_iLoadAmount);
-    int Dispense();
-    int GetCount();
-    int TestGumballMachine();
-    //~State();
-
-    private:
-    // const static int m_pSoldOutState = 0;
-    // const static int m_pNoQuarterState = 1;
-    // const static int m_iHAS_QUARTER = 2;
-    // const static int m_pSoldState = 3;
+    virtual void Dispense();
+    //virtual void GetCount();
+    void TestGumballMachine();
 };
 
 class GumBallMachine
 {
+    public:
+    GumBallMachine(int a_iNumberGumBalls);
+    int count = 0;
     State soldOutState;
     State noQuarterState;
     State hasQuarterState;
     State soldState;
     State state = soldOutState;
-
-    GumBallMachine(int a_iNumberGumBalls);
-
-    int count = 0;
 };
 
 class SoldState : public State
 {
-
+    void TurnCrank() override
+    {
+        //TODO - Code for state turncrank
+    }
 };
 
 class SoldOutState : public State
 {
-    SoldOutState();
+    //SoldOutState();
+    void EjectQuarter() override
+    {
+        //TODO - Code for eject quarter in this state
+    }
 };
 
 class NoQuarterState : public State
 {
-    GumBallMachine m_oGumBall;
-    NoQuarterState(GumBallMachine a_oGumBallMachine)
-    {
-        this->m_oGumBall = a_oGumBallMachine;
-    }
-    int InsertQuarter()
+    void InsertQuarter() override
     {
         std::cout << "You inserted a quarter" << std::endl;
     }
@@ -63,8 +57,7 @@ class NoQuarterState : public State
 
 class HasQuarterState : public State
 {
-    
-    int EjectQuarter()
+    void EjectQuarter() override
     {
         std::cout << "Quarter returned" << std::endl;
     }
@@ -72,7 +65,7 @@ class HasQuarterState : public State
 
 class WinnerState : public State
 {
-
+    //TODO - Actions for this state
 };
 
 #endif

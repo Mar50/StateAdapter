@@ -4,17 +4,17 @@
 
 int main (int argc, char** argv) 
 {
-    State currentState = new 
-    if(currentState->m_iCount > 0)
-    {
-        currentState->SetState(currentState, noQuarterState);
-        currentState->LoadGumballs(5);
-    }
-    currentState->InsertQuarter();
-    currentState->EjectQuarter();
-    currentState->TurnCrank();
+    GumBallMachine gumBallMachine(5);
+    // if(gumBallMachine.count > 0)
+    // {
+    //     gumBallMachine.state = gumBallMachine.noQuarterState;
+    //     currentState->LoadGumballs(5);
+    // }
+    // currentState->InsertQuarter();
+    // currentState->EjectQuarter();
+    // currentState->TurnCrank();
     
     //Run GumBall machine tests
-    currentState->TestGumballMachine();
+    gumBallMachine.TestGumballMachine();
     return 0;
 }
