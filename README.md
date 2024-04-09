@@ -1,6 +1,6 @@
 # StateAdapter
-C++ examples from Head First: Design Patterns book.
+C++ examples from "Head First: Design Patterns" book.
 
 Chapters:
--State Pattern
+-State Pattern\n
 -Adapter
