@@ -2,11 +2,11 @@
 
 GumBallMachine::GumBallMachine(const int a_numGumballs)
 {
-    this->soldState = std::make_shared<SoldState>(this);
-    this->soldOutState = std::make_shared<SoldOutState>(this);
-    this->noQuarterState = std::make_shared<NoQuarterState>(this);
-    this->hasQuarterState = std::make_shared<HasQuarterState>(this);
-    this->winnerState = std::make_shared<WinnerState>(this);
+    this->soldState = std::make_shared<SoldState>(*this);
+    this->soldOutState = std::make_shared<SoldOutState>(*this);
+    this->noQuarterState = std::make_shared<NoQuarterState>(*this);
+    this->hasQuarterState = std::make_shared<HasQuarterState>(*this);
+    this->winnerState = std::make_shared<WinnerState>(*this);
 
     count = a_numGumballs;
 
@@ -16,11 +16,11 @@ GumBallMachine::GumBallMachine(const int a_numGumballs)
     }
 }
 
-SoldState::SoldState(const std::weak_ptr<GumBallMachine> a_gumBallMachine){ m_gumBallMachine = a_gumBallMachine.lock(); }
-SoldOutState::SoldOutState(const std::weak_ptr<GumBallMachine> a_gumBallMachine){ m_gumBallMachine = a_gumBallMachine.lock(); }
-NoQuarterState::NoQuarterState(const std::weak_ptr<GumBallMachine> a_gumBallMachine){ m_gumBallMachine = a_gumBallMachine.lock(); }
-HasQuarterState::HasQuarterState(const std::weak_ptr<GumBallMachine> a_gumBallMachine){ m_gumBallMachine = a_gumBallMachine.lock(); }
-WinnerState::WinnerState(const std::weak_ptr<GumBallMachine> a_gumBallMachine){ m_gumBallMachine = a_gumBallMachine.lock(); }
+SoldState::SoldState(std::weak_ptr<GumBallMachine> a_gumBallMachine){ m_gumBallMachine = a_gumBallMachine.lock(); }
+SoldOutState::SoldOutState(std::weak_ptr<GumBallMachine> a_gumBallMachine){ m_gumBallMachine = a_gumBallMachine.lock(); }
+NoQuarterState::NoQuarterState(std::weak_ptr<GumBallMachine> a_gumBallMachine){ m_gumBallMachine = a_gumBallMachine.lock(); }
+HasQuarterState::HasQuarterState(std::weak_ptr<GumBallMachine> a_gumBallMachine){ m_gumBallMachine = a_gumBallMachine.lock(); }
+WinnerState::WinnerState(std::weak_ptr<GumBallMachine> a_gumBallMachine){ m_gumBallMachine = a_gumBallMachine.lock(); }
 
 void GumBallMachine::SetState(const std::weak_ptr<State> a_state)
 {

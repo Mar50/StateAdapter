@@ -27,11 +27,11 @@ class GumBallMachine
     
     int count = 0;
 
-    std::shared_ptr<State>& soldState;
-    std::shared_ptr<State>& soldOutState;
-    std::shared_ptr<State>& noQuarterState;
-    std::shared_ptr<State>& hasQuarterState;
-    std::shared_ptr<State>& winnerState;
+    std::shared_ptr<State> soldState;
+    std::shared_ptr<State> soldOutState;
+    std::shared_ptr<State> noQuarterState;
+    std::shared_ptr<State> hasQuarterState;
+    std::shared_ptr<State> winnerState;
 
     std::shared_ptr<State> currentState;
 };
@@ -41,7 +41,7 @@ class SoldState : public State
     std::shared_ptr<GumBallMachine> m_gumBallMachine;
 
     public:
-    explicit SoldState(const std::weak_ptr<GumBallMachine> a_gumBallMachine);
+    explicit SoldState(std::weak_ptr<GumBallMachine> a_gumBallMachine);
     void InsertQuarter() override;
     void EjectQuarter() override;
     void TurnCrank() override;
@@ -53,7 +53,7 @@ class SoldOutState : public State
     std::shared_ptr<GumBallMachine> m_gumBallMachine;
 
     public:
-    explicit SoldOutState(const std::weak_ptr<GumBallMachine> a_gumBallMachine);
+    explicit SoldOutState(std::weak_ptr<GumBallMachine> a_gumBallMachine);
     void InsertQuarter() override;
     void EjectQuarter() override;
     void TurnCrank() override;
@@ -65,7 +65,7 @@ class NoQuarterState : public State
     std::shared_ptr<GumBallMachine> m_gumBallMachine;
 
     public:
-    explicit NoQuarterState(const std::weak_ptr<GumBallMachine> a_gumBallMachine);
+    explicit NoQuarterState(std::weak_ptr<GumBallMachine> a_gumBallMachine);
     void InsertQuarter() override;
     void EjectQuarter() override;
     void TurnCrank() override;
@@ -77,7 +77,7 @@ class HasQuarterState : public State
     std::shared_ptr<GumBallMachine> m_gumBallMachine;
 
     public:
-    explicit HasQuarterState(const std::weak_ptr<GumBallMachine> a_gumBallMachine);
+    explicit HasQuarterState(std::weak_ptr<GumBallMachine> a_gumBallMachine);
     void InsertQuarter() override;
     void EjectQuarter() override;
     void TurnCrank() override;
@@ -89,7 +89,7 @@ class WinnerState : public State
     std::shared_ptr<GumBallMachine> m_gumBallMachine;
 
     public:
-    explicit WinnerState(const std::weak_ptr<GumBallMachine> a_gumBallMachine);
+    explicit WinnerState(std::weak_ptr<GumBallMachine> a_gumBallMachine);
     void InsertQuarter() override;
     void EjectQuarter() override;
     void TurnCrank() override;
