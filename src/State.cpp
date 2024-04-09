@@ -1,176 +1,192 @@
 #include "State.hpp"
 
-// State::State(int a_numGumballs)
-// {
- 
-// }
-
-GumBallMachine::GumBallMachine(int a_iNumberGumBalls)
+GumBallMachine::GumBallMachine(const int a_numGumballs)
 {
-    GumBallMachine soldOutState;
-    GumBallMachine noQuarterState;
-    GumBallMachine hasQuarterState;
-    GumBallMachine soldState;
-    State state = soldOutState;
+    this->soldState = std::make_shared<SoldState>(this);
+    this->soldOutState = std::make_shared<SoldOutState>(this);
+    this->noQuarterState = std::make_shared<NoQuarterState>(this);
+    this->hasQuarterState = std::make_shared<HasQuarterState>(this);
+    this->winnerState = std::make_shared<WinnerState>(this);
 
-    this->count = a_iNumberGumBalls;
-    if(a_iNumberGumBalls > 0)
+    count = a_numGumballs;
+
+    if(a_numGumballs > 0)
     {
-        this->state = this->noQuarterState;
+        this->currentState = hasQuarterState;
     }
 }
 
-void State::TestGumballMachine()
+SoldState::SoldState(const std::weak_ptr<GumBallMachine> a_gumBallMachine){ m_gumBallMachine = a_gumBallMachine.lock(); }
+SoldOutState::SoldOutState(const std::weak_ptr<GumBallMachine> a_gumBallMachine){ m_gumBallMachine = a_gumBallMachine.lock(); }
+NoQuarterState::NoQuarterState(const std::weak_ptr<GumBallMachine> a_gumBallMachine){ m_gumBallMachine = a_gumBallMachine.lock(); }
+HasQuarterState::HasQuarterState(const std::weak_ptr<GumBallMachine> a_gumBallMachine){ m_gumBallMachine = a_gumBallMachine.lock(); }
+WinnerState::WinnerState(const std::weak_ptr<GumBallMachine> a_gumBallMachine){ m_gumBallMachine = a_gumBallMachine.lock(); }
+
+void GumBallMachine::SetState(const std::weak_ptr<State> a_state)
 {
-    //GetMachineState();
-    //InsertQuarter();
-    //TurnCrank();
-    
-    //GetMachineState();
-
-    //InsertQuarter();
-    //EjectQuarter();
-    TurnCrank();
-
-    //GetMachineState();
-
-    InsertQuarter();
-    TurnCrank();
-    InsertQuarter();
-    TurnCrank();
-    EjectQuarter();
-
-    //GetMachineState();
-
-    InsertQuarter();
-    InsertQuarter();
-    TurnCrank();
-    InsertQuarter();
-    TurnCrank();
-    InsertQuarter();
-    TurnCrank();
-
-    //GetMachineState();
+    this->currentState = a_state.lock();
 }
 
-// void State::GetMachineState()
-// {
-//     std::cout << "\nMighty Gumball, Inc." << std::endl;
-//     std::cout << "Inventory: " << this->m_iCount << " gumballs" << std::endl;
-//     std::cout << "Machine is wating for quarter\n" << std::endl;
-// }
-
-// int State::GetCount()
-// {
-//     std::cout << "Inventory: " << this->m_iCount << std::endl;
-//     return 0;
-// }
-
-// int State::LoadGumballs(int a_iLoadAmount)
-// {
-//     this->m_iCount = a_iLoadAmount;
-//     return 0;
-// }
-
-void State::InsertQuarter()
+void GumBallMachine::ReleaseBall()
 {
-    if(this)
-        std::cout << "You can't insert another quarter!" << std::endl;
-    else if(this.noQuarterState)
-    {
-        m_pCurrentState = m_pHasQuarterState;
-        std::cout << "You inserted a quarter" << std::endl;
-    }
-    else if(m_pCurrentState->m_pSoldOutState)
-    {
-        std::cout << "You can't insert a quarter, the machine is sold out" << std::endl;
-    }
-    else if(m_pCurrentState->m_pSoldState)
-    {
-        std::cout << "Please wait, we're already giving you a gumball" << std::endl;
-    }
-    return 0;
+    std::cout << "A gumball comes rolling out of the slot..." << std::endl;
+    if(this->count != 0)
+        this->count--;
 }
 
-void State::EjectQuarter()
+void GumBallMachine::GetMachineState()
 {
-    if(p_Machine->state == hasQuarterState)
-    {
-        m_pCurrentState = m_pNoQuarterState;
-        std::cout << "Quarter returned" << std::endl;
-    }
-    else if(m_pCurrentState->m_pNoQuarterState)
-    {
-        std::cout << "You haven't inserted a quarter" << std::endl;
-    }
-    else if(m_pCurrentState->m_pSoldState)
-    {
-        std::cout << "Sorry, you already turned the crank" << std::endl;
-    }
-    else if(m_pCurrentState->m_pSoldOutState)
-    {
-        std::cout << "You can't eject, you haven't inserted a quarter yet" << std::endl;
-    }
-    return 0;
+    std::cout << "\nMighty Gumball, Inc." << std::endl;
+    std::cout << "Inventory: " << this->count << " gumballs" << std::endl;
+    std::cout << "Machine is wating for quarter" << std::endl;
 }
 
-int State::TurnCrank()
+void GumBallMachine::InsertQuarter()
 {
-    if(m_pCurrentState==m_pSoldState)
-        std::cout << "Turning twice doesn't get you another gumball!" << std::endl;
-    else if(m_pCurrentState==m_pNoQuarterState)
-    {
-        std::cout << "You turned but there's no quarter" << std::endl;
-    }
-    else if(m_pCurrentState==m_pSoldOutState)
-    {
-        std::cout << "You turned but there's no gumballs" << std::endl;
-    }
-    else if(m_pCurrentState->m_pHasQuarterState)
-    {
-        m_pCurrentState = m_pSoldState;
-        std::cout << "You turned..." << std::endl;
-        Dispense();
-    }
-    return 0;
+    this->currentState->InsertQuarter();
 }
 
-int State::Dispense()
+void GumBallMachine::EjectQuarter()
 {
-    if(a_pCurrentState->m_pSoldState)
-    {
-        std::cout << "A gumball comes rolling out of the slot" << std::endl;
-        m_pCurrentState->m_iCount--;
-            if(m_pCurrentState->m_iCount==0)
-            {
-                std::cout << "Oops, out of gumballs!" << std::endl;
-                m_pCurrentState = m_pSoldOutState;
-            }
-            else
-                m_pCurrentState = m_pNoQuarterState;
-    }
-    else if(m_pCurrentState->m_pNoQuarterState)
-    {
-        std::cout << "You need to pay first" << std::endl;
-    }
-    else if(m_pCurrentState->m_pSoldOutState)
-    {
-        std::cout << "No gumball dispensed" << std::endl;
-    }
-    else if(m_pCurrentState->m_pHasQuarterState)
-    {
-        std::cout << "No gumball dispensed" << std::endl;
-    }
-    return 0;
+    this->currentState->EjectQuarter();
 }
 
-// int State::SetState(State* a_pCurrentState, State* a_pNewState)
-// {
-//     a_pCurrentState = a_pNewState;
-//     return 0;
-// }
+void GumBallMachine::TurnCrank()
+{
+    this->currentState->TurnCrank();
+    this->currentState->Dispense();
+}
 
-// State::~State()
-// {
+void NoQuarterState::InsertQuarter()
+{
+    std::cout << "You inserted a quarter." << std::endl;
+    this->m_gumBallMachine->hasQuarterState;
+}
 
-// }
+void NoQuarterState::EjectQuarter()
+{
+    std::cout << "You haven't inserted a quarter!" << std::endl;
+}
+
+void NoQuarterState::TurnCrank()
+{
+    std::cout << "You turned, but there's no quarter." << std::endl;
+}
+
+void NoQuarterState::Dispense()
+{
+    std::cout << "You need to pay first." << std::endl;
+}
+
+void SoldState::InsertQuarter()
+{
+    std::cout << "Please wait, we're already giving you a gumball." << std::endl;
+}
+
+void SoldState::EjectQuarter()
+{
+    std::cout << "Sorry, you've already turned the crank." << std::endl;
+}
+
+void SoldState::TurnCrank()
+{
+    std::cout << "Sorry, you've already turned the crank." << std::endl;
+}
+
+void SoldState::Dispense()
+{
+    std::cout << "A gumball comes rolling out of the slot..." << std::endl;
+    if(this->m_gumBallMachine->count > 1)
+    {
+        this->m_gumBallMachine->SetState(m_gumBallMachine->noQuarterState);
+    }
+    else
+    {
+        std::cout << "Oops, out of gumballs" << std::endl;
+        this->m_gumBallMachine->SetState(m_gumBallMachine->soldOutState);
+    }
+}
+
+void HasQuarterState::InsertQuarter()
+{
+    std::cout << "You can't insert another quarter." << std::endl;
+}
+
+void HasQuarterState::EjectQuarter()
+{
+    std::cout <<"Quarter returned" << std::endl;
+    this->m_gumBallMachine->SetState(this->m_gumBallMachine->noQuarterState);
+}
+
+void HasQuarterState::TurnCrank()
+{
+    auto randomNumber = []() {return (std::rand()/RAND_MAX)*10;};
+    std::cout << "you turned..." << std::endl;
+    if(randomNumber() and this->m_gumBallMachine->count > 1)
+        this->m_gumBallMachine->SetState(m_gumBallMachine->winnerState);
+    else
+        this->m_gumBallMachine->SetState(m_gumBallMachine->soldState);
+}
+
+void HasQuarterState::Dispense()
+{
+    std::cout << "No gumball dispensed." << std::endl;
+}
+
+void SoldOutState::InsertQuarter()
+{
+    std::cout << "Please wait, we are already giving you a gumball." << std::endl;
+}
+
+void SoldOutState::EjectQuarter()
+{
+    std::cout << "Sorry, you already turned the crank." << std::endl;
+}
+
+void SoldOutState::TurnCrank()
+{
+    std::cout << "Turning twice doesn't get you another gumball." << std::endl;
+}
+
+void SoldOutState::Dispense()
+{
+    std::cout << "No gumball dispensed" << std::endl;
+}
+
+void WinnerState::InsertQuarter()
+{
+    std::cout << "Please wait we are already giving you a gumball." << std::endl;
+}
+
+void WinnerState::EjectQuarter()
+{
+    std::cout << "Sorry you already turned the crank." << std::endl;
+}
+
+void WinnerState::TurnCrank()
+{
+    std::cout << "Turning twice doesnt get you another gumball." << std::endl;
+}
+
+void WinnerState::Dispense()
+{
+    //Win 2 gumballs
+    std::cout << "YOU ARE A WINNER! You get 2 gumballs." << std::endl;
+    this->m_gumBallMachine->ReleaseBall();
+    if(this->m_gumBallMachine->count == 0)
+    {
+        this->m_gumBallMachine->SetState(m_gumBallMachine->soldOutState);
+    }
+    else //Win 1 Gumball
+    {
+        this->m_gumBallMachine->ReleaseBall();
+    }
+    if(this->m_gumBallMachine->count > 0) //No win
+    {
+        this->m_gumBallMachine->SetState(m_gumBallMachine->noQuarterState);
+    }
+    else //Machine sold out
+    {
+        this->m_gumBallMachine->SetState(m_gumBallMachine->soldOutState);
+    }
+}
