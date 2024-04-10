@@ -7,10 +7,12 @@
             "args": [
                 "-fdiagnostics-color=always",
                 "-g",
+                "~/Dev/StateAdapter/src/StateMain.cpp",
+                "~/Dev/StateAdapter/src/State.cpp",
                 //"${file}",
-                "${workspaceFolder}/src/*.cpp",
+                //"${workspaceFolder}/src/*.cpp",
                 "-o",
-                "${workspaceFolder}/build/test.out",
+                "${workspaceFolder}/build/State.out",
                 "-I",
                 "${workspaceFolder}/include",
                 ""

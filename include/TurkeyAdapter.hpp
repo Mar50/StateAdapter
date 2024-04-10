@@ -6,9 +6,8 @@
 class TurkeyAdapter : public IDuck
 {
     std::shared_ptr<ITurkey> turkey = nullptr;
-
     public:
     explicit TurkeyAdapter(std::shared_ptr<ITurkey> newTurkey);
-    void Quack() override;
-    void Fly() override;
+    void Quack(std::shared_ptr<ITurkey> newTurkey) override;
+    void Fly(std::shared_ptr<ITurkey> newTurkey) override;
 };

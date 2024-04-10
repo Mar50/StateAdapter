@@ -1,4 +1,4 @@
 #!/bin/bash
-g++ ~/Projects/StateAdapter/src/StateMain.cpp ~/Projects/StateAdapter/src/State.cpp \
--I ~/Projects/StateAdapter/include \
--o /home/mitch/Projects/StateAdapter/build/StateMachine.out
+g++ ~/Dev/StateAdapter/src/StateMain.cpp ~/Dev/StateAdapter/src/State.cpp \
+-I ~/Dev/StateAdapter/include \
+-o ~/Dev/StateAdapter/build/StateMachine.out

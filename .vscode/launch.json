@@ -4,7 +4,7 @@
       "name": "C/C++: g++ build and debug active file",
       "type": "cppdbg",
       "request": "launch",
-      "program": "${workspaceFolder}/build/test.out",
+      "program": "${workspaceFolder}/build/State.out",
       "args": [],
       "stopAtEntry": false,
       "cwd": "${fileDirname}",
@@ -34,7 +34,7 @@
       "stopAtEntry": false,
       "externalConsole": false,
       "cwd": "/home/mitch/Projects/StateAdapter/include",
-      "program": "/home/mitch/Projects/StateAdapter/include/build/Debug/outDebug",
+      "program": "/home/mitch/Projects/StateAdapter/build",
       "MIMode": "gdb",
       "miDebuggerPath": "gdb",
       "setupCommands": [

@@ -1,4 +1,9 @@
 #include "Adapter.hpp"
+#include "IDuck.hpp"
+#include "ITurkey.hpp"
+
+#include <memory>
+#include <iostream>
 
 int main (int argc, char** argv)
 {
